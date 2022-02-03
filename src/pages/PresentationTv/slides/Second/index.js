@@ -10,7 +10,7 @@ import {
   SwitchTransition,
 } from 'react-transition-group';
 
-const SERVER = "ws://localhost:3535/";
+const SERVER = "https://ws-spectacle-palowa.herokuapp.com/";
 
 var socket = socketClient (SERVER);
 socket.on('connection', () => {

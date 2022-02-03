@@ -7,7 +7,7 @@ import ColorRadio from '../../components/ColorRadio';
 
 import { Container} from './styles'
 
-const SERVER = "ws://localhost:3535/";
+const SERVER = "https://ws-spectacle-palowa.herokuapp.com/";
 
 var socket = socketClient (SERVER);
 socket.on('connection', () => {
