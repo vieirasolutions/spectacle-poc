@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Slide, Heading, FlexBox, Box } from 'spectacle';
-
-import {
-  CSSTransition,
-  SwitchTransition,
-} from 'react-transition-group';
+import socketClient  from "socket.io-client";
 
 import './index.scss';
 
 import ColorRadio from '../../components/ColorRadio';
 
-import { PreviewImage } from './styles'
+import { Container} from './styles'
 
-const Second = function () {
+const SERVER = "ws://localhost:3535/";
+
+var socket = socketClient (SERVER);
+socket.on('connection', () => {
+    console.log(`I'm connected with the back-end`);
+});
+
+const ControlPanel = function () {
+
   const [color, setColor] = useState('')
 
   const [listColors] = useState([
@@ -44,13 +47,15 @@ const Second = function () {
 
   function selectColor(color) {
     setColor(color)
+    socket.emit('color', color)
   }
 
   return (
-    <Slide
-      backgroundColor="primary.light"
-    >
-      <FlexBox flexDirection={`row`}>
+    <Container>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
         {listColors.map(c => (
             <ColorRadio
               key={c.id}
@@ -58,26 +63,8 @@ const Second = function () {
               onSelect={selectColor}
               colorSelected={color}
             />))}
-      </FlexBox>
-
-      {color && (
-      <Box>
-        <SwitchTransition>
-          <CSSTransition
-            key={color.id}
-            addEndListener={(node, done) => node.addEventListener("transitionend", done, false)}
-            classNames='fade'
-          >
-            <FlexBox alignContent={'center'} flexDirection={'column'}>
-              <Heading color='primary.contrastText' fontSize='header' >{color.name}</Heading>
-              <PreviewImage src={color.previewImage} />
-            </FlexBox>
-          </CSSTransition>
-        </SwitchTransition>
-
-      </Box>
-      )}
-    </Slide>
+      </div>
+    </Container>
   );
 }
-export default Second;
+export default ControlPanel;

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Deck, FlexBox, FullScreen, Progress } from 'spectacle';
+import { Box, Deck, FlexBox, FullScreen } from 'spectacle';
 
-import theme from './theme';
+import theme from '../../theme';
 
-import First from './pages/First';
-import Second from './pages/Second';
+import Second from './slides/Second';
 
 const template = () => (
   <FlexBox
@@ -16,20 +15,16 @@ const template = () => (
     <Box padding="0 1em">
       <FullScreen />
     </Box>
-    <Box padding="1em">
-      <Progress />
-    </Box>
   </FlexBox>
 );
 
-function App() {
+function PresentationTv() {
   return (
     <>
     <Deck theme={theme} template={template}>
-      <First />
       <Second />
     </Deck>
     </>
   );
 }
-export default App;
+export default PresentationTv;
